@@ -15,10 +15,19 @@
     </div>
   </div>
   <div class="p-4 w-full flex flex-row gap-2">
-    <i class="mdi mdi-text-box-search"></i>
-    <input type="text" matInput placeholder="Type something..">
-    <mat-icon matSuffix>search</mat-icon>
-    <input type="text" class="w-full rounded-lg bg-header-gray" />
+    <mat-form-field
+      appearance="outline"
+      class="w-full rounded-lg bg-header-gray"
+      formControlName="control"
+    >
+      <input
+        type="text"
+        matInput
+        placeholder="Type something..."
+        class="w-full rounded-lg bg-header-gray"
+      />
+      <mat-icon matSuffix fontSet="mdi">mdi-home</mat-icon>
+    </mat-form-field>
     <span class="mdi mdi-filter-outline"></span>
   </div>
 </div>

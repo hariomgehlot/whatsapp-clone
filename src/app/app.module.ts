@@ -9,6 +9,7 @@ import { ChatCardComponent } from './sidepanel/chat-card/chat-card.component';
 import { RightChatHeaderComponent } from './rightpanel/right-chat-header/right-chat-header.component';
 import { RightChatContainerComponent } from './rightpanel/right-chat-container/right-chat-container.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
     RightChatHeaderComponent,
     RightChatContainerComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MatIconModule],
+  imports: [BrowserModule, AppRoutingModule, MatIconModule, MatFormFieldModule],
   providers: [],
   bootstrap: [AppComponent],
 })
