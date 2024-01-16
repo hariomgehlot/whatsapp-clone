@@ -1,0 +1,57 @@
+<div class="flex flex-col sticky border-b border-b-header-gray">
+  <div class="bg-header-gray flex flex-row justify-between">
+    <div class="flex flex-col w-28 pl-6 p-3">
+      <img
+        alt="'profile'"
+        src="../../../assets/images/profile.svg"
+        class="w-10 h-10 ring-2 rounded-full"
+        [ngClass]="{
+          'ring-red': !homeService.isWsConnected,
+          'ring-green': homeService.isWsConnected
+        }"
+      />
+    </div>
+    <div class="flex flex-row gap-6 items-center">
+      <button mat-icon-button>
+        <mat-icon>groups</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="p-4 w-full flex flex-row gap-2" [formGroup]="formGroup">
+    <mat-form-field
+      appearance="outline"
+      class="w-full rounded-lg bg-header-gray"
+    >
+      <input
+        type="text"
+        matInput
+        placeholder="Search or start new chat"
+        class="w-full rounded-lg bg-header-gray"
+        [formControlName]="'searchKey'"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+    <mat-icon>bookmark</mat-icon>
+  </div>
+</div>
+<div class="overflow-auto max-h-77" *ngIf="roomList?.length; else noData">
+  <div
+    class="hover:bg-hover-accent"
+    *ngFor="let item of roomList"
+    [ngClass]="{
+      'bg-hover-accent': selectedRoom === item
+    }"
+  >
+    <app-chat-card [roomData]="item" (click)="roomSelected(item)">
+    </app-chat-card>
+  </div>
+</div>
+
+<ng-template #noData>
+  <div class="h-72 flex flex-col items-center justify-center">
+    No rooms Found
+  </div>
+</ng-template>
