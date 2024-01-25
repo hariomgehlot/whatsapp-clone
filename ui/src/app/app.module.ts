@@ -14,9 +14,13 @@ import { RightChatContainerComponent } from './components/rightpanel/right-chat-
 import { RightChatHeaderComponent } from './components/rightpanel/right-chat-header/right-chat-header.component';
 import { ChatCardComponent } from './components/sidepanel/chat-card/chat-card.component';
 import { ChatContainerComponent } from './components/sidepanel/chat-container/chat-container.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { SigninComponent } from './components/signin/signin.component';
+import { HttpInterceptorService } from './interceptors/httpinterceptor.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MyErrorStateMatcher } from './services/formErrorState';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +30,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RightChatHeaderComponent,
     RightChatContainerComponent,
     ChatComponent,
+    SigninComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,8 +43,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
+    },
+    { provide: ErrorStateMatcher, useClass: MyErrorStateMatcher },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

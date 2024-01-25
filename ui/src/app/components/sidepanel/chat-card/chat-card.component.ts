@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IRoom } from 'src/app/types/alltypes';
+import { ChatEntity, IRoom } from 'src/app/types/alltypes';
 
 @Component({
   selector: 'app-chat-card',
@@ -8,7 +8,7 @@ import { IRoom } from 'src/app/types/alltypes';
 })
 export class ChatCardComponent implements OnInit {
   @Input()
-  roomData?: IRoom;
+  roomData?: ChatEntity;
   constructor() {}
 
   ngOnInit(): void {}

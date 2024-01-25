@@ -10,13 +10,21 @@ import {
 } from './routers/messageRouter';
 const app = express();
 const port = 3000;
-
+let clientsSet!: { userId: string; socket: WebSocket }[];
 const server = http.createServer(app);
 const path = '/ws';
 const wss = new WebSocketServer({ server, path });
 
 wss.on('connection', (ws, req): void => {
-  console.log('ws connected');
+  console.log('ws connected with' + req.url);
+  try {
+    let userId = req.url?.split('=')[1];
+    if (userId && userId?.length < 24) {
+      clientsSet.push({ userId: userId, socket: ws });
+    }
+  } catch (error) {
+    ws.send(JSON.stringify({ err: error }));
+  }
   ws.on('message', (message: any) => {
     console.log('received: %s', message);
     try {

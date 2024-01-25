@@ -1,7 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
+  important: true,
   theme: {
+    variants: {
+      animation: ["responsive", "motion-safe", "motion-reduce"],
+    },
     colors: {
       "header-gray": "#F0F2F5",
       red: "#ff0000",
@@ -16,15 +20,15 @@ module.exports = {
       WorkSans: ["WorkSans", "sans-serif"],
     },
     extend: {
+      fontSize: {
+        xxs: "0.55rem",
+      },
       backgroundImage: {
         "chat-bg": "url('/assets/images/background.png')",
       },
       backgroundColor: {
         "hover-accent": "#f5f6f6",
       },
-    },
-    accentColor: {
-      gray: "#6B7C85",
     },
     maxHeight: {
       77: "77svh",
@@ -38,11 +42,14 @@ module.exports = {
     },
     maxWidth: {
       "100%": "100%",
+      24: "24rem",
     },
     textColor: {
       accent: "#6B7C85",
       white: "#FFF",
       outgoingMessage: "#d9fdd3",
+      black: "#000",
+      ticked: "rgba(0, 59, 210, 1)",
     },
   },
   plugins: [],

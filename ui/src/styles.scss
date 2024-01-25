@@ -1,14 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '~@angular/material/theming';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @layer base {
     html {
         font-family: "WorkSans", system-ui, sans-serif;
     }
 }
 
+$indigo-palette: (
+    50: #0d7713,
+    100: #0d7713,
+    200: #0d7713,
+    300: #0d7713,
+    400: #0d7713,
+    500: #0d7713,
+    600: #0d7713,
+    700: #0d7713,
+    800: #0d7713,
+    900: #0d7713,
+
+    contrast: (50: rgba(black, 0.87),
+        100: rgba(#0d7713, 0.87),
+        200: rgba(#0d7713, 0.87),
+        300: white,
+        400: white,
+        500: white,
+        600: white,
+        700: white,
+        800: white,
+        900: white,
+    )
+);
 @font-face {
     font-family: "WorkSans";
     src: url("../src/assets/fonts/WorkSans.ttf");
 }
+$my-primary: mat.define-palette($indigo-palette, 500);
+$my-accent: mat.define-palette($indigo-palette, 200, 100, 400);
+
+
+// The "warn" palette is optional and defaults to red if not specified.
+$my-warn: mat.define-palette($indigo-palette);
+
+$my-theme: mat.define-light-theme((color: (primary: $my-primary,
+                accent: $my-accent,
+            ),
+            typography: mat.define-typography-config($font-family: 'WorkSans'),
+            density: 0,
+        ));
+
+
+@include mat.all-component-themes($my-theme);

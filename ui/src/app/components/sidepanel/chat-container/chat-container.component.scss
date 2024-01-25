@@ -1,0 +1,44 @@
+.mat-field::ng-deep {
+
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 0;
+    }
+
+    .mat-form-field-flex {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-items: center !important;
+    }
+
+    .mat-form-field-wrapper {
+        padding: 0;
+    }
+
+    .mat-form-field-outline-start,
+    .mat-form-field-outline-gap,
+    .mat-form-field-outline-end {
+        border-color: #606060;
+    }
+
+    .mat-form-field-outline {
+        display: none !important;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        outline: none;
+        display: none;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline-start {
+        border: none;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline-end {
+        border: none;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline-gap {
+        border: none;
+    }
+}

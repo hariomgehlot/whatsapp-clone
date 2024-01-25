@@ -24,21 +24,26 @@
     <button mat-icon-button>
       <mat-icon>attach_file</mat-icon>
     </button>
-    <mat-form-field
-      appearance="outline"
-      class="w-full rounded-lg bg-header-gray"
-    >
-      <input
-        type="text"
-        matInput
-        placeholder="Type a new message"
-        class="w-full rounded-lg bg-header-gray"
-        [formControlName]="'message'"
-        (keydown.enter)="onMessageSend()"
-        [required]="true"
-      />
-      <mat-icon matPrefix>photo_camera</mat-icon>
-    </mat-form-field>
+    <div class="w-full flex flex-row justify-start items-center p-1">
+      <div class="rounded-lg bg-white w-full fill-header-gray">
+        <form [formGroup]="formGroup" class="w-full mat-field" (ngSubmit)="onMessageSend()">
+          <mat-form-field [appearance]="'outline'" class="w-full">
+            <input
+              type="text"
+              matInput
+              placeholder="Type a new message..."
+              class="h-full"
+              [formControlName]="'message'"
+              autocomplete="off"
+              class="mb-2 text-xs font-WorkSans"
+            />
+            <div matPrefix class="flex flex-col justify-center items-center">
+              <mat-icon class="text-lg">photo_camera</mat-icon>
+            </div>
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
     <button mat-icon-button class="pr-9">
       <mat-icon>mic</mat-icon>
     </button>

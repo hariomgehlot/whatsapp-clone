@@ -41,7 +41,9 @@ async function getAllMessagesByRoomID(req: Request, res: Response) {
   try {
     let result = await messageModel
       .find({ room: req.body.roomId })
-      .sort({ createdAt: 1 });
+      .sort({ createdAt: 1 })
+      .populate('sender')
+      .populate('room');
     console.log('id is ', req.body.roomId);
     return result;
   } catch (error) {

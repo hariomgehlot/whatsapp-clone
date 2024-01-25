@@ -9,7 +9,7 @@
   <div class="flex flex-col w-full justify-between">
     <div class="flex flex-row items-center justify-between">
       <span class="font-semibold text-ellipsis text-lg">
-        {{ roomData?.name }}</span
+        {{ roomData?.name  || roomData?.email}}</span
       >
       <div class="font-semibold text-xs">
         {{ roomData?.lastMessage?.updatedAt | date : "hh:mm" }}

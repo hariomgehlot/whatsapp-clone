@@ -1,5 +1,5 @@
 <div
-  class="w-auto max-w-20 m-4 relative"
+  class="w-auto max-w-24 m-4 relative text-black"
   [ngClass]="{
     'float-right': !isLeft,
     'float-left': isLeft
@@ -65,8 +65,23 @@
           d="M5.188,0H0v11.193l6.467-8.625C7.526,1.156,6.958,0,5.188,0z"
         ></path></svg
     ></span>
-  <span class="font-normal text-sm text-wrap whitespace-break-spaces break-words">
-    {{ data?.message }}
-  </span>
+    <div class="flex flex-row items-end justify-end">
+      <span
+        class="font-normal text-sm text-wrap whitespace-break-spaces break-words"
+      >
+        {{ data?.message }}
+      </span>
+      <span class="text-xxs flex flex-row justify-end items-end gap-1 pt-1"
+        >{{ data?.updatedAt | date : "hh:mm" }}
+        <ng-container *ngIf="!isLeft">
+          <mat-icon
+            *ngIf="data?.status === 'sent'"
+            class="text-sm text-accent pt-1"
+            >done</mat-icon
+          >
+          <mat-icon class="text-sm text-ticked pt-2 w-3">done_all</mat-icon>
+        </ng-container>
+      </span>
+    </div>
   </div>
 </div>

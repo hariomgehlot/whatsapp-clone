@@ -1,15 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { HomeService } from 'src/app/services/home.service';
-import { IMessage, IRoom } from 'src/app/types/alltypes';
+import { ChatEntity, IMessage, IRoom } from 'src/app/types/alltypes';
 
 @Component({
   selector: 'app-right-chat-container',
   templateUrl: './right-chat-container.component.html',
   styleUrls: ['./right-chat-container.component.scss'],
 })
-export class RightChatContainerComponent implements OnInit {
-  roomData!: IRoom;
+export class RightChatContainerComponent implements OnInit, OnDestroy {
+  roomData!: ChatEntity;
+  sub = new Subscription();
   messageList: IMessage[] = [];
   formGroup = new FormGroup({
     message: new FormControl(''),
@@ -24,10 +26,17 @@ export class RightChatContainerComponent implements OnInit {
       error: (err) => {},
     });
   }
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.getMessageOfRoom();
-    this.homeService.onMessage().subscribe({
+    this.homeService.reconnectedWs.subscribe(() => this.connectWs());
+  }
+
+  connectWs() {
+    this.sub = this.homeService.onMessage().subscribe({
       next: (data) => {
         if (data.room._id === this.roomData._id)
           setTimeout(() => {
@@ -36,7 +45,6 @@ export class RightChatContainerComponent implements OnInit {
       },
     });
   }
-
   scroll(init: boolean = false) {
     if (this.chatContainer) {
       const { offsetHeight, scrollHeight, scrollTop } =

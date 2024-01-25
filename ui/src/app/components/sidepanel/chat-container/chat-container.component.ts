@@ -1,22 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { HomeService } from 'src/app/services/home.service';
-import { IRoom } from 'src/app/types/alltypes';
+import { ChatEntity, IRoom, IUser } from 'src/app/types/alltypes';
 
 @Component({
   selector: 'app-chat-container',
   templateUrl: './chat-container.component.html',
   styleUrls: ['./chat-container.component.scss'],
 })
-export class ChatContainerComponent implements OnInit {
-  roomList?: IRoom[];
-  selectedRoom!: IRoom;
+export class ChatContainerComponent implements OnInit, OnDestroy {
+  roomList?: ChatEntity[];
+  sub = new Subscription();
+  selectedRoom!: ChatEntity;
   formGroup = new FormGroup({
     searchKey: new FormControl(''),
   });
 
-  constructor(public homeService: HomeService) {
-    this.homeService.onMessage().subscribe({
+  constructor(public homeService: HomeService) {}
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
+  connectWs() {
+    this.sub = this.homeService.onMessage().subscribe({
       next: (data) => {
         if (this.roomList) {
           let room = this.roomList.findIndex((item) => {
@@ -40,8 +47,12 @@ export class ChatContainerComponent implements OnInit {
       },
     });
   }
-
   ngOnInit(): void {
+    this.homeService.reconnectedWs.subscribe(() => this.connectWs());
+    this.getAllRooms();
+  }
+
+  getAllRooms() {
     this.homeService.getAllRooms().subscribe({
       next: (data) => {
         this.roomList = data as IRoom[];
@@ -57,10 +68,20 @@ export class ChatContainerComponent implements OnInit {
       },
     });
   }
-
-  roomSelected(roomData: IRoom) {
+  roomSelected(roomData: ChatEntity) {
     roomData.unreadMessageCount = 0;
     this.homeService.roomChangedSubject.next(roomData);
     this.selectedRoom = roomData;
+  }
+  onUserSearch(key: string) {
+    if (!key) {
+      this.getAllRooms();
+    } else {
+      this.homeService.getAllUsers(key).subscribe({
+        next: (data: any) => {
+          this.roomList = data;
+        },
+      });
+    }
   }
 }

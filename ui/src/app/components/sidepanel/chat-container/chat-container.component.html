@@ -20,21 +20,29 @@
       </button>
     </div>
   </div>
-  <div class="p-4 w-full flex flex-row gap-2" [formGroup]="formGroup">
-    <mat-form-field
-      appearance="outline"
-      class="w-full rounded-lg bg-header-gray"
-    >
-      <input
-        type="text"
-        matInput
-        placeholder="Search or start new chat"
-        class="w-full rounded-lg bg-header-gray"
-        [formControlName]="'searchKey'"
-      />
-      <mat-icon matPrefix>search</mat-icon>
-    </mat-form-field>
-    <mat-icon>bookmark</mat-icon>
+  <div class="w-full flex flex-row justify-start items-center p-3">
+    <div class="rounded-lg bg-header-gray w-full fill-header-gray">
+      <form [formGroup]="formGroup" class="w-full mat-field">
+        <mat-form-field [appearance]="'outline'" class="w-full">
+          <input
+            type="text"
+            matInput
+            placeholder="Search or start new chat"
+            class="h-full"
+            [formControlName]="'searchKey'"
+            autocomplete="off"
+            class="mb-2 text-xs font-WorkSans"
+            (ngModelChange)="onUserSearch($event)"
+          />
+          <div matPrefix class="flex flex-col justify-center items-center">
+            <mat-icon class="text-lg">search</mat-icon>
+          </div>
+        </mat-form-field>
+      </form>
+    </div>
+    <button mat-icon-button>
+      <mat-icon>filter_outline</mat-icon>
+    </button>
   </div>
 </div>
 <div class="overflow-auto max-h-77" *ngIf="roomList?.length; else noData">
